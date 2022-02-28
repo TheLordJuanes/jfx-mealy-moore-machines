@@ -59,6 +59,7 @@
         <rowConstraints>
           <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label text="States:">
@@ -77,7 +78,7 @@
                   <Insets top="20.0" />
                </GridPane.margin>
             </Label>
-            <JFXTextField fx:id="nStates" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="350.0" promptText="Type the number of states" GridPane.columnIndex="1">
+            <JFXTextField fx:id="nStates" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#statesIsNumber" prefWidth="350.0" promptText="Type the number of states" GridPane.columnIndex="1">
                <font>
                   <Font name="Consolas" size="24.0" />
                </font>
@@ -86,6 +87,22 @@
                </GridPane.margin>
             </JFXTextField>
             <JFXTextField fx:id="alphabet" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="350.0" promptText="Type the alphabet" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Consolas" size="24.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="10.0" top="20.0" />
+               </GridPane.margin>
+            </JFXTextField>
+            <Label text="Separator:" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Consolas Bold" size="24.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="20.0" />
+               </GridPane.margin>
+            </Label>
+            <JFXTextField fx:id="separator" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="350.0" promptText="Type the separator" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font name="Consolas" size="24.0" />
                </font>
