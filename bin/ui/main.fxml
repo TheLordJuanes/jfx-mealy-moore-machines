@@ -181,7 +181,7 @@
                </children>
             </GridPane>
          </children></HBox>
-      <JFXButton style="-fx-background-color: #000000;" text="Minimize Table" textFill="WHITE">
+      <JFXButton onAction="#minimizeTable" style="-fx-background-color: #000000;" text="Minimize Table" textFill="WHITE">
          <font>
             <Font name="Consolas Bold" size="24.0" />
          </font>

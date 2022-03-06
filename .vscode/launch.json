@@ -5,11 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "pwa-msedge",
+            "type": "java",
+            "name": "Launch Main",
             "request": "launch",
-            "name": "Launch Edge against localhost",
-            "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}"
-        }
+            "mainClass": "ui.Main",
+            "projectName": "jfx-mealy-moore-machines"
+        },
     ]
 }
