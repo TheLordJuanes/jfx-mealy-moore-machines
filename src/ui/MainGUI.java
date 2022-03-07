@@ -49,37 +49,43 @@ public class MainGUI {
 
 	private Machine machine;
 
+	private JFXTextField[][] mInput;
+
 	public MainGUI() {
 		machine = new Machine();
 	}
 
 	@FXML
 	public void minimizeTable(ActionEvent event) {
-		int statesNumber = Integer.parseInt(nStates.getText());
-		int alphabetLength = alphabet.getText().split(separator.getText()).length;
-		int additionalColumns = mealy.isSelected() ? 1 : 2;
-		String[][] inputTable = new String[statesNumber + 1][alphabetLength + additionalColumns];
-		matrixInput.getChildren().remove(0);
-		for (int j = 1; j < alphabetLength + additionalColumns; j++) {
-			Label label = (Label) matrixInput.getChildren().get(j - 1);
-			inputTable[0][j] = label.getText();
-		}
-		int removeColumns = mealy.isSelected() ? 0 : 1;
-		matrixInput.getChildren().remove(0, alphabetLength + removeColumns);
+		/*int statesNumber = Integer.parseInt(nStates.getText());
+		String[] alph = alphabet.getText().split(separator.getText());
+		int alphabetLength = alph.length;
+		int addCols = moore.isSelected() ? 1 : 0;
+		String[][] mString = new String[statesNumber + 1][alphabetLength + addCols + 1];
+		mString[0][0] = "";
+		for (int i = 0; i < alph.length; i++)
+			mString[0][i + 1] = alph[i];
+		if (moore.isSelected())
+			mString[0][alphabetLength + addCols] = "S";
+		for (int i = 0; i < statesNumber; i++)
+			mString[i + 1][0] = ((char) (65 + i)) + "";
 		for (int i = 1; i <= statesNumber; i++) {
-			Label label = (Label) matrixInput.getChildren().get(i - 1);
-			inputTable[i][0] = label.getText();
+			for (int j = 1; j <= alphabetLength + addCols; j++)
+				mString[i][j] = mInput[i - 1][j - 1].getText();
 		}
-		matrixInput.getChildren().remove(0, statesNumber);
-		int k = 0;
-		for (int i = 1; i < statesNumber + 1; i++) {
-			for (int j = 1; j < alphabetLength + additionalColumns; j++) {
-				JFXTextField aux = (JFXTextField) matrixInput.getChildren().get(k);
-				inputTable[i][j] = aux.getText();
-				k++;
+		printMatrix(mString);*/
+		int statesNumber = 9;
+		String[][] mString = {{"","0","1"},{"A","B,0","C,0"}, {"B","C,1","D,1"}, {"C","D,0","E,0"}, {"D","C,1","B,1"}, {"E","F,1","E,1"}, {"F","G,0","C,0"}, {"G","F,1","G,1"}, {"H","I,1","B,0"}, {"I","H,1","D,0"}};
+		String[][] minimized = mealy.isSelected() ? machine.minimizeMealy(mString, statesNumber) : machine.minimizeMoore(mString, statesNumber);
+	}
+
+	public void printMatrix(String[][] matrix) {
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[i].length; j++) {
+				System.out.print("[" + matrix[i][j] + "]");
 			}
+			System.out.println();
 		}
-		String[][] minimized = mealy.isSelected() ? machine.minimizeMealy(inputTable) : machine.minimizeMoore(inputTable);
 	}
 
 	@FXML
@@ -104,6 +110,7 @@ public class MainGUI {
 		if (!mealy.isSelected() && !moore.isSelected()) {
 			return;
 		}
+
 		int n = Integer.parseInt(nStates.getText());
 		String[] alph = alphabet.getText().split(separator.getText());
 		matrixInput = new GridPane();
@@ -121,6 +128,7 @@ public class MainGUI {
 		for (int i = 0; i < n; i++) {
 			placeInMatrix(new Label(((char) (65 + i)) + ""), matrixInput, 0, i + 1);
 		}
+		mInput = new JFXTextField[n][cols];
 		if (mealy.isSelected()) {
 			for (int i = 1; i <= n; i++) {
 				for (int j = 1; j <= cols; j++) {
@@ -149,6 +157,7 @@ public class MainGUI {
 						}
 					});
 					placeInMatrix(aux, matrixInput, j, i);
+					mInput[i - 1][j - 1] = aux;
 				}
 			}
 		} else {
@@ -194,6 +203,7 @@ public class MainGUI {
 						});
 					}
 					placeInMatrix(aux, matrixInput, j, i);
+					mInput[i - 1][j - 1] = aux;
 				}
 			}
 		}
