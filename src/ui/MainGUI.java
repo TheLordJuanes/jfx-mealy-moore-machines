@@ -77,6 +77,7 @@ public class MainGUI {
 		int statesNumber = 9;
 		String[][] mString = {{"","0","1"},{"A","B,0","C,0"}, {"B","C,1","D,1"}, {"C","D,0","E,0"}, {"D","C,1","B,1"}, {"E","F,1","E,1"}, {"F","G,0","C,0"}, {"G","F,1","G,1"}, {"H","I,1","B,0"}, {"I","H,1","D,0"}};
 		String[][] minimized = mealy.isSelected() ? machine.minimizeMealy(mString, statesNumber) : machine.minimizeMoore(mString, statesNumber);
+		printMatrix(minimized);
 	}
 
 	public void printMatrix(String[][] matrix) {

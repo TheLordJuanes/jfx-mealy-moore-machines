@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class Machine {
 
     public String[][] minimizeMealy(String[][] tableMealy, int statesNumber) {
-        String[][] minimized = null;
         ArrayList<ArrayList<Integer>> groups = new ArrayList<>();
         for (int i = 1; i <= statesNumber; i++) {
             for (int j = i + 1; j <= statesNumber; j++) {
@@ -57,15 +56,97 @@ public class Machine {
             if (printArrayList(aux).equals(printArrayList(temp))) {
                 stop = true;
             }
-			groups = temp;
+            groups = temp;
         }
-		System.out.println("Final Matrix");
+        System.out.println("Final Matrix");
         System.out.println(printArrayList(groups));
+        String[][] minimized = new String[groups.size()+1][tableMealy[0].length+1];
+
+        for(int i=0; i<groups.size(); i++){
+            for(int j=0; j<groups.get(i).size(); j++){
+                if(minimized[i+1][1]==null){
+                    if(groups.get(i).size()>1)
+                        minimized[i+1][1] = "{"+((char) (65 + groups.get(i).get(j)-1));
+                    else 
+                        minimized[i+1][1] = "{"+((char) (65 + groups.get(i).get(j)-1))+"}";
+                } else if(j==groups.get(i).size()-1){
+                    minimized[i+1][1] += ", "+((char) (65 + groups.get(i).get(j)-1))+"}";
+                } else{
+                    minimized[i+1][1] += ", "+((char) (65 + groups.get(i).get(j)-1));
+                }
+            }
+        }
+        minimized[0][0] = "New Names";
+        minimized[0][1] = "Blocks";
+        for(int i=minimized.length-2; i>=0; i--){
+            minimized[i+1][0] = ((char) (90 - i))+"'";
+        }
+        for (int k = 2; k < minimized[0].length; k++) {
+            minimized[0][k] = tableMealy[0][k-1];
+            for (int i = 0; i < groups.size(); i++) {
+                for (int j = 0; j < groups.get(i).size(); j++) {
+                    if(minimized[i+1][k]==null){
+                        if(groups.get(i).size()>1)
+                            minimized[i+1][k] = "{"+tableMealy[groups.get(i).get(j)][k-1].charAt(0);
+                        else 
+                            minimized[i+1][k] = "{"+tableMealy[groups.get(i).get(j)][k-1].charAt(0)+"}, "+tableMealy[groups.get(i).get(j)][k-1].charAt(tableMealy[groups.get(i).get(j)][k-1].length()-1);
+                    } else if((minimized[i+1][k].contains(tableMealy[groups.get(i).get(j)][k-1].charAt(0)+"") && j==groups.get(i).size()-1)){
+                        minimized[i+1][k] += "}, "+tableMealy[groups.get(i).get(j)][k-1].charAt(tableMealy[groups.get(i).get(j)][k-1].length()-1);
+                    }   else if(j==groups.get(i).size()-1){
+                        minimized[i+1][k] += ", "+tableMealy[groups.get(i).get(j)][k-1].charAt(0)+"}, "+tableMealy[groups.get(i).get(j)][k-1].charAt(tableMealy[groups.get(i).get(j)][k-1].length()-1);
+                    } else{
+                        minimized[i+1][k] += ", "+tableMealy[groups.get(i).get(j)][k-1].charAt(0);
+                    }
+                }
+            }       
+        }
+
+        String[][] renamed = new String[minimized.length][minimized[0].length-1];
+        
+        for(int i=1; i<renamed.length; i++){
+            renamed[i][0] = minimized[i][0];
+        }
+
+        for(int j=1; j<renamed[0].length; j++){
+            renamed[0][j] = minimized[0][j+1];
+        }
+
+        for(int i=1; i<renamed.length; i++){
+            for(int j=1; j<renamed[0].length; j++){
+                String[] line1 = minimized[i][j+1].split("}");
+                String line2 = line1[0].substring(1);
+                if(line2.contains(", ")){
+                    line2 = line2.split(", ")[0];
+                }
+                
+                String exit = line1[line1.length-1];
+                boolean stoped = false;
+                for(int k=1; k<minimized.length&&!stoped; k++){
+                    if(minimized[k][1].contains(line2)){
+                        exit = minimized[k][0] + exit;
+                        stoped = true;
+                    }
+                }
+                renamed[i][j] = exit;
+            }
+        }
+
+        printMatrix(minimized);
+        System.out.println("--------------------");
+        printMatrix(renamed);
         return minimized;
     }
 
-    public ArrayList<ArrayList<Integer>> groupingMealy(ArrayList<ArrayList<Integer>> groups, String[][] tableMealy,
-            int statesNumber) {
+    public void printMatrix(String[][] matrix) {
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[i].length; j++) {
+				System.out.print("[" + matrix[i][j] + "]");
+			}
+			System.out.println();
+		}
+	}
+
+    public ArrayList<ArrayList<Integer>> groupingMealy(ArrayList<ArrayList<Integer>> groups, String[][] tableMealy, int statesNumber) {
         ArrayList<ArrayList<Integer>> groupitos = new ArrayList<>();
         for (int l = 0; l < groups.size(); l++) {
             for (int i = 0; i < groups.get(l).size(); i++) {
@@ -123,23 +204,23 @@ public class Machine {
     }
 
     public String[][] minimizeMoore(String[][] tableMoore, int statesNumber) {
-        String[][] minimized;
+        String[][] minimized = null;
         for (int i = 1; i <= statesNumber; i++) {
             for (int j = 1; j <= tableMoore[i].length; j++) {
 
             }
         }
-        return null;
+        return minimized;
     }
 
     public String printArrayList(ArrayList<ArrayList<Integer>> groups) {
-		String msg = "";
+        String msg = "";
         for (int i = 0; i < groups.size(); i++) {
             for (int j = 0; j < groups.get(i).size(); j++) {
                 msg += "[" + groups.get(i).get(j) + "]";
             }
             msg += "\n";
         }
-		return msg;
+        return msg;
     }
 }
