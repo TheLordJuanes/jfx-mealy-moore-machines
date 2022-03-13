@@ -8,8 +8,15 @@
             "type": "java",
             "name": "Launch Main",
             "request": "launch",
+            "mainClass": "gui.Main",
+            "projectName": ""
+        },
+        {
+            "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
             "mainClass": "ui.Main",
             "projectName": "jfx-mealy-moore-machines"
-        },
+        }
     ]
 }

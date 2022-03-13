@@ -20,6 +20,7 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("CONNECTED AUTOMATA AND MINIMUM EQUIVALENT");
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("icon.png")));
+        primaryStage.setMaximized(true);
         primaryStage.show();
     }
 }

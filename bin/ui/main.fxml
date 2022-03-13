@@ -25,7 +25,7 @@
       </Label>
       <HBox alignment="CENTER">
          <children>
-            <Label text="Choose the machine: ">
+            <Label fx:id="lbChoose" text="Choose the machine: ">
                <font>
                   <Font name="Consolas" size="24.0" />
                </font>
@@ -62,7 +62,7 @@
             <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="States:">
+            <Label fx:id="lbStates" text="States:">
                <font>
                   <Font name="Consolas Bold" size="24.0" />
                </font>
@@ -70,7 +70,7 @@
                   <Insets bottom="5.0" top="5.0" />
                </GridPane.margin>
             </Label>
-            <Label text="Alphabet:" GridPane.rowIndex="1">
+            <Label fx:id="lbAlph" text="Alphabet:" GridPane.rowIndex="1">
                <font>
                   <Font name="Consolas Bold" size="24.0" />
                </font>
@@ -94,7 +94,7 @@
                   <Insets left="10.0" top="20.0" />
                </GridPane.margin>
             </JFXTextField>
-            <Label text="Separator:" GridPane.rowIndex="2">
+            <Label fx:id="lbSep" text="Separator:" GridPane.rowIndex="2">
                <font>
                   <Font name="Consolas Bold" size="24.0" />
                </font>
@@ -115,7 +115,7 @@
             <Insets bottom="50.0" left="50.0" right="50.0" />
          </VBox.margin>
       </GridPane>
-      <JFXButton onAction="#gTable" style="-fx-background-color: #000000;" text="Generate Table" textFill="WHITE">
+      <JFXButton fx:id="tableGen" onAction="#gTable" style="-fx-background-color: #000000;" text="Generate Table" textFill="WHITE">
          <font>
             <Font name="Consolas Bold" size="24.0" />
          </font>
@@ -126,61 +126,34 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <HBox fx:id="tSpace" alignment="CENTER">
+      <HBox fx:id="tSpace" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-alignment: center;">
          <children>
             <GridPane fx:id="matrixInput" alignment="CENTER" gridLinesVisible="true" visible="false">
                <columnConstraints>
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+            <GridPane fx:id="matrixIntermediate" alignment="CENTER" gridLinesVisible="true" layoutX="10.0" layoutY="10.0" visible="false">
+               <columnConstraints>
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="SOMETIMES" />
                </rowConstraints>
-               <children>
-                  <Label text="Top">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets />
-                     </GridPane.margin>
-                     <padding>
-                        <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
-                     </padding>
-                  </Label>
-               </children>
             </GridPane>
             <GridPane fx:id="matrixOutput" alignment="CENTER" gridLinesVisible="true" visible="false">
                <columnConstraints>
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="SOMETIMES" />
                </rowConstraints>
-               <children>
-                  <Label text="Top">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets />
-                     </GridPane.margin>
-                     <padding>
-                        <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
-                     </padding>
-                  </Label>
-               </children>
             </GridPane>
-         </children></HBox>
+         </children>
+      </HBox>
       <JFXButton onAction="#minimizeTable" style="-fx-background-color: #000000;" text="Minimize Table" textFill="WHITE">
          <font>
             <Font name="Consolas Bold" size="24.0" />
