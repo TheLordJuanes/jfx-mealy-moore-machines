@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.MainGUI">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.MachineGUI">
    <children>
       <Label text="CONNECTED AUTOMATA AND MINIMUM EQUIVALENT">
          <font>
@@ -25,12 +25,12 @@
       </Label>
       <HBox alignment="CENTER">
          <children>
-            <Label fx:id="lbChoose" text="Choose the machine: ">
+            <Label text="Choose the machine: ">
                <font>
                   <Font name="Consolas" size="24.0" />
                </font>
             </Label>
-            <JFXRadioButton fx:id="mealy" onAction="#configMealy" text="Mealy">
+            <JFXRadioButton fx:id="mealy" onAction="#configureMealy" text="Mealy">
                <font>
                   <Font name="Consolas" size="24.0" />
                </font>
@@ -38,7 +38,7 @@
                   <Insets right="10.0" />
                </HBox.margin>
             </JFXRadioButton>
-            <JFXRadioButton fx:id="moore" onAction="#configMoore" text="Moore">
+            <JFXRadioButton fx:id="moore" onAction="#configureMoore" text="Moore">
                <font>
                   <Font name="Consolas" size="24.0" />
                </font>
@@ -59,10 +59,9 @@
         <rowConstraints>
           <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="lbStates" text="States:">
+            <Label text="States:">
                <font>
                   <Font name="Consolas Bold" size="24.0" />
                </font>
@@ -70,7 +69,7 @@
                   <Insets bottom="5.0" top="5.0" />
                </GridPane.margin>
             </Label>
-            <Label fx:id="lbAlph" text="Alphabet:" GridPane.rowIndex="1">
+            <Label text="Alphabet:" GridPane.rowIndex="1">
                <font>
                   <Font name="Consolas Bold" size="24.0" />
                </font>
@@ -78,7 +77,7 @@
                   <Insets top="20.0" />
                </GridPane.margin>
             </Label>
-            <JFXTextField fx:id="nStates" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#statesIsNumber" prefWidth="350.0" promptText="Type the number of states" GridPane.columnIndex="1">
+            <JFXTextField fx:id="states" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#statesIsNumber" prefWidth="350.0" promptText="Type the number of states" GridPane.columnIndex="1">
                <font>
                   <Font name="Consolas" size="24.0" />
                </font>
@@ -94,28 +93,12 @@
                   <Insets left="10.0" top="20.0" />
                </GridPane.margin>
             </JFXTextField>
-            <Label fx:id="lbSep" text="Separator:" GridPane.rowIndex="2">
-               <font>
-                  <Font name="Consolas Bold" size="24.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets top="20.0" />
-               </GridPane.margin>
-            </Label>
-            <JFXTextField fx:id="separator" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="350.0" promptText="Type the separator" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <font>
-                  <Font name="Consolas" size="24.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="10.0" top="20.0" />
-               </GridPane.margin>
-            </JFXTextField>
          </children>
          <VBox.margin>
             <Insets bottom="50.0" left="50.0" right="50.0" />
          </VBox.margin>
       </GridPane>
-      <JFXButton fx:id="tableGen" onAction="#gTable" style="-fx-background-color: #000000;" text="Generate Table" textFill="WHITE">
+      <JFXButton onAction="#generateTable" style="-fx-background-color: #000000;" text="Generate Table" textFill="WHITE">
          <font>
             <Font name="Consolas Bold" size="24.0" />
          </font>
@@ -126,7 +109,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <HBox fx:id="tSpace" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-alignment: center;">
+      <HBox fx:id="tableSpace" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-alignment: center;">
          <children>
             <GridPane fx:id="matrixInput" alignment="CENTER" gridLinesVisible="true" visible="false">
                <columnConstraints>
@@ -136,6 +119,11 @@
                   <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
+            <Label fx:id="arrow1">
+               <font>
+                  <Font name="Consolas" size="24.0" />
+               </font>
+            </Label>
             <GridPane fx:id="matrixIntermediate" alignment="CENTER" gridLinesVisible="true" layoutX="10.0" layoutY="10.0" visible="false">
                <columnConstraints>
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
@@ -144,6 +132,11 @@
                   <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
+            <Label fx:id="arrow2">
+               <font>
+                  <Font name="Consolas" size="24.0" />
+               </font>
+            </Label>
             <GridPane fx:id="matrixOutput" alignment="CENTER" gridLinesVisible="true" visible="false">
                <columnConstraints>
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
@@ -154,7 +147,7 @@
             </GridPane>
          </children>
       </HBox>
-      <JFXButton onAction="#minimizeTable" style="-fx-background-color: #000000;" text="Minimize Table" textFill="WHITE">
+      <JFXButton fx:id="buttonMinimize" onAction="#minimize" style="-fx-background-color: #000000;" text="Minimize Table" textFill="WHITE" visible="false">
          <font>
             <Font name="Consolas Bold" size="24.0" />
          </font>

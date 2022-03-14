@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Moore {
 
@@ -21,9 +20,6 @@ public class Moore {
             groups = subGroups2;
         }
         String[][] minimize = format(groups, format);
-        String msg = format ? "Intermediate" : "Final";
-        System.out.println(msg);
-        printMatrix(minimize);
         return minimize;
     }
 
@@ -86,7 +82,6 @@ public class Moore {
         }
         return minimize;
     }
-
 
     private ArrayList<ArrayList<Integer>> step2A() {
         ArrayList<ArrayList<Integer>> groups = new ArrayList<>();
@@ -203,29 +198,5 @@ public class Moore {
             inputSymbols[i] = machine[0][i+1];
         }
         this.inputSymbols = inputSymbols;
-    }
-
-    public void printMatrix(String[][] matrix) {
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++) {
-                System.out.print("[" + matrix[i][j] + "]");
-            }
-            System.out.println();
-        }
-    }
-
-    public String printArrayList(ArrayList<ArrayList<Integer>> groups) {
-        String msg = "";
-        for (int i = 0; i < groups.size(); i++) {
-            for (int j = 0; j < groups.get(i).size(); j++) {
-                msg += "[" + groups.get(i).get(j) + "]";
-            }
-            msg += "\n";
-        }
-        return msg;
-    }
-
-    public void printArray(String[] array) {
-        System.out.println(Arrays.toString(array));
     }
 }
