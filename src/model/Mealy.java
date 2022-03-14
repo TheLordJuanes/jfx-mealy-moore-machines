@@ -127,7 +127,6 @@ public class Mealy {
                 groups.add(group);
             }
         }
-        System.out.println("Step2A\n"+printArrayList(groups));
         return groups;
     }
 
@@ -208,16 +207,5 @@ public class Mealy {
             inputSymbols[i - 1] = machine[0][i];
         }
         this.inputSymbols = inputSymbols;
-    }
-
-    public String printArrayList(ArrayList<ArrayList<Integer>> groups) {
-        String msg = "";
-        for (int i = 0; i < groups.size(); i++) {
-            for (int j = 0; j < groups.get(i).size(); j++) {
-                msg += "[" + groups.get(i).get(j) + "]";
-            }
-            msg += "\n";
-        }
-        return msg;
     }
 }

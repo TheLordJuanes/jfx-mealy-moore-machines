@@ -9,14 +9,9 @@ public class Machine {
         return mealy.partitioning(format);
     }
 
-    public String[][] minimizeMoore(String[][] tableMoore, int statesNumber) {
-        String[][] minimized = null;
-        for (int i = 1; i <= statesNumber; i++) {
-            for (int j = 1; j <= tableMoore[i].length; j++) {
-
-            }
-        }
-        return minimized;
+    public String[][] minimizeMoore(String[][] matrix, boolean format) {
+        Moore moore = new Moore(matrix);
+        return moore.partitioning(format);
     }
 
     public void printMatrix(String[][] matrix) {
