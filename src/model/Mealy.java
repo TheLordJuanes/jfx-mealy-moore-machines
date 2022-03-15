@@ -4,11 +4,67 @@ import java.util.ArrayList;
 
 public class Mealy {
 
-    private String[] inputSymbols;
+    private String[] states, inputSymbols;
     private String[][] successors, outputSymbols;
 
     public Mealy(String[][] machine) {
+        machine = connected(machine);
         fillMealy(machine);
+    }
+
+    private String[][] connected(String[][] machine) {
+        ArrayList<Integer> included = connectedStates(machine);
+        return connectedMachine(machine, included);
+    }
+
+    private String[][] connectedMachine(String[][] machine, ArrayList<Integer> included) {
+        String[][] connected = new String[included.size() + 1][machine[0].length];
+        int additional = 0;
+        connected[0] = machine[0];
+        for (int i = 1; i < machine.length; i++) {
+            if (indexOfList(included, i - 1) == -1)
+                additional++;
+            else
+                connected[i - additional] = machine[i];
+        }
+        return connected;
+    }
+
+    private ArrayList<Integer> connectedStates(String[][] machine) {
+        ArrayList<Integer> included = new ArrayList<>();
+        included.add(0);
+        for (int i = 0; i < included.size(); i++) {
+            for (int j = 1; j < machine[0].length; j++) {
+                int index = machine[included.get(i) + 1][j].charAt(0) - 'A';
+                if (indexOfList(included, index) == -1)
+                    included.add(index);
+            }
+        }
+        return included;
+    }
+
+    private int indexOfList(ArrayList<Integer> list, int num) {
+        int index = -1;
+        for (int i = 0; i < list.size() && (index == -1); i++)
+            index = list.get(i) == num ? i : -1;
+        return index;
+    }
+    
+    private int indexState(int index){
+        for (int i = 0; i < states.length; i++) {
+            if(states[i].charAt(0)-'A'==index)
+                return i;
+        }
+        return -1;
+    }
+
+    public void printMatrix(String[][] matrix) {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                System.out.print("[" + matrix[i][j] + "]");
+            }
+            System.out.println();
+        }
     }
 
     public String[][] partitioning(boolean format) {
@@ -34,15 +90,15 @@ public class Mealy {
     }
 
     private String[][] finalFormat(ArrayList<ArrayList<Integer>> groups, String[][] minimize) {
-        for (int i = 0, j=groups.size()-1; i < groups.size(); i++, j--) {
-            minimize[i+1][0] = (char)('Z'-j)+"";
+        for (int i = 0, j = groups.size() - 1; i < groups.size(); i++, j--) {
+            minimize[i + 1][0] = (char) ('Z' - j) + "";
         }
         String[][] blockSuccessors = new String[groups.size()][inputSymbols.length];
         for (int g = 0; g < groups.size(); g++) {
             ArrayList<Integer> group = groups.get(g);
             for (int j = 0; j < inputSymbols.length; j++) {
-                int index = indexOfGroup(groups, successors[group.get(0)][j].charAt(0)-65);
-                blockSuccessors[g][j] = (char)('Z'-(groups.size()-1)+index)+"";
+                int index = indexOfGroup(groups, indexState(successors[group.get(0)][j].charAt(0) - 65));
+                blockSuccessors[g][j] = (char) ('Z' - (groups.size() - 1) + index) + "";
             }
         }
         for (int i = 0; i < groups.size(); i++) {
@@ -57,7 +113,7 @@ public class Mealy {
         for (int i = 0; i < groups.size(); i++) {
             ArrayList<Integer> group = groups.get(i);
             for (int j = 0; j < group.size(); j++) {
-                char s = (char) (group.get(j) + 'A');
+                char s = states[group.get(j)].charAt(0);
                 if (minimize[i + 1][0] == null)
                     minimize[i + 1][0] = j == group.size() - 1 ? "{" + s + "}" : "{" + s + ", ";
                 else
@@ -138,8 +194,8 @@ public class Mealy {
                 for (int j = i + 1; j < group.size(); j++) {
                     boolean stop = false;
                     for (int k = 0; k < successors[0].length && !stop; k++) {
-                        int i1 = successors[group.get(i)][k].charAt(0) - 65;
-                        int i2 = successors[group.get(j)][k].charAt(0) - 65;
+                        int i1 = indexState(successors[group.get(i)][k].charAt(0) - 65);
+                        int i2 = indexState(successors[group.get(j)][k].charAt(0) - 65);
                         if (!(indexOfGroup(groups, i1) == indexOfGroup(groups, i2)))
                             stop = true;
                     }
@@ -185,6 +241,7 @@ public class Mealy {
 
     private void fillMealy(String[][] machine) {
         inputSymbols(machine);
+        states(machine);
         int rows = machine.length;
         int columns = machine[0].length;
         String[][] successors = new String[rows - 1][columns - 1];
@@ -207,5 +264,14 @@ public class Mealy {
             inputSymbols[i - 1] = machine[0][i];
         }
         this.inputSymbols = inputSymbols;
+    }
+
+    private void states(String[][] machine) {
+        int length = machine.length;
+        String[] states = new String[length - 1];
+        for (int i = 1; i < length; i++) {
+            states[i - 1] = machine[i][0];
+        }
+        this.states = states;
     }
 }
