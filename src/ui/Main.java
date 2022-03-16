@@ -1,3 +1,9 @@
+/**
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * @Authors: Carlos Jimmy Pantoja and Juan Esteban Caicedo
+ * @Date: March, 15th 2022
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
 package ui;
 
 import javafx.application.Application;
@@ -9,11 +15,22 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    /**
+	 * Name: main <br>
+	 * <br> Main method. <br>
+	 * @param args - Java command line arguments - args = String[]
+	*/
     public static void main(String[] args) {
         launch(args);
     }
 
-    @Override
+    /**
+	 * Name: start <br>
+	 * <br> GUI start method. <br>
+	 * @param primaryStage - GUI primary stage - primaryStage = Stage
+	 * @throws Exception - to indicate the conditions this program might want to catch.
+	*/
+	@Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
         Scene scene = new Scene(root);

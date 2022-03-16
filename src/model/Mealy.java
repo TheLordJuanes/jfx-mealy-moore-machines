@@ -1,22 +1,60 @@
+/**
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * @Authors: Carlos Jimmy Pantoja and Juan Esteban Caicedo
+ * @Date: March, 15th 2022
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
 package model;
 
 import java.util.ArrayList;
 
 public class Mealy {
 
+    // -----------------------------------------------------------------
+    // Attributes
+    // -----------------------------------------------------------------
+
     private String[] states, inputSymbols;
     private String[][] successors, outputSymbols;
 
+    // -----------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------
+
+    /**
+     * Name: Mealy <br>
+     * <br> Constructor method of a connected Mealy machine. <br>
+     * <b>pre: </b> The machine represented in the Java String matrix is already initialized and isn't empty. <br>
+	 * <b>post: </b> A connected Mealy machine is created. <br>
+     * @param machine - Java String matrix representing a Mealy machine - matrix = String[][], matrix != null
+    */
     public Mealy(String[][] machine) {
         machine = connected(machine);
         fillMealy(machine);
     }
 
+    /**
+     * Name: connected <br>
+     * <br> Method used to make connected a Mealy machine. <br>
+     * <b>pre: </b> The machine represented in the Java String matrix is already initialized and isn't empty. <br>
+	 * <b>post: </b> A connected Mealy machine. <br>
+     * @param machine - Java String matrix representing a Mealy machine - matrix = String[][], matrix != null
+     * @return A String matrix with the connected machine.
+    */
     private String[][] connected(String[][] machine) {
         ArrayList<Integer> included = connectedStates(machine);
         return connectedMachine(machine, included);
     }
 
+    /**
+     * Name: connectedMachine <br>
+     * <br> Private method used to make connected a Mealy machine. <br>
+     * <b>pre: </b> The machine represented in the Java String matrix is already initialized and isn't empty. <br>
+	 * <b>post: </b> A connected Mealy machine. <br>
+     * @param machine - Java String matrix representing a Mealy machine - matrix = String[][], matrix != null
+     * @param included - integers list representing the  - included = ArrayList of Integer, matrix != null
+     * @return A String matrix with the connected machine.
+    */
     private String[][] connectedMachine(String[][] machine, ArrayList<Integer> included) {
         String[][] connected = new String[included.size() + 1][machine[0].length];
         int additional = 0;
@@ -30,6 +68,14 @@ public class Mealy {
         return connected;
     }
 
+    /**
+     * Name: connectedStates <br>
+     * <br> Method used to get the connected states in a Mealy machine. <br>
+     * <b>pre: </b> The machine represented in the Java String matrix is already initialized and isn't empty. <br>
+	 * <b>post: </b> The connected states in the machine in question are found. <br>
+     * @param machine - Java String matrix representing a Mealy machine - matrix = String[][], matrix != null
+     * @return A list of integers representing the connected states in the machine in question.
+    */
     private ArrayList<Integer> connectedStates(String[][] machine) {
         ArrayList<Integer> included = new ArrayList<>();
         included.add(0);
@@ -43,30 +89,46 @@ public class Mealy {
         return included;
     }
 
+    /**
+     * Name: indexOfList <br>
+     * <br> Method used to get the index of an element in a list of integers. <br>
+     * <b>pre: </b> The list is already initialized. <br>
+	 * <b>post: </b> The index of an element in the list is found. <br>
+     * @param list - list of integers - list = ArrayList of Integer, list != null
+     * @param num - integer to use for the index search - num = int, num != null
+     * @return An integer representing the index of an element in a list of integers.
+    */
     private int indexOfList(ArrayList<Integer> list, int num) {
         int index = -1;
         for (int i = 0; i < list.size() && (index == -1); i++)
             index = list.get(i) == num ? i : -1;
         return index;
     }
-    
-    private int indexState(int index){
+
+    /**
+     * Name: indexState <br>
+     * <br> Method used to get the index of a state in the list of states of the Mealy machine. <br>
+     * <b>pre: </b> The list of states of the Mealy machine is already initialized. <br>
+	 * <b>post: </b> The index of a state in the list of states of the Mealy machine is found. <br>
+     * @param index - the state converted to char (integer format) - list = ArrayList of Integer, list != null
+     * @return An integer representing the index of a state in the list of states.
+    */
+    private int indexState(int index) {
         for (int i = 0; i < states.length; i++) {
-            if(states[i].charAt(0)-'A'==index)
+            if (states[i].charAt(0) - 'A' == index)
                 return i;
         }
         return -1;
     }
 
-    public void printMatrix(String[][] matrix) {
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++) {
-                System.out.print("[" + matrix[i][j] + "]");
-            }
-            System.out.println();
-        }
-    }
-
+    /**
+     * Name: partitioning <br>
+     * <br> Method used to do the partitioning algorithm for a Mealy machine. <br>
+     * <b>pre: </b> The input symbols list is already initialized and filled, the output symbols matrix and the successors matrix. <br>
+	 * <b>post: </b> The partitioning algorithm is done for the Mealy machine. <br>
+     * @param format - format of the table to be displayed represented by True for intermediate table and False for final table - format = boolean, format != null
+     * @return A String matrix representing the correspondent minimized Mealy machine.
+    */
     public String[][] partitioning(boolean format) {
         ArrayList<ArrayList<Integer>> groups = step2A();
         boolean stop = false;
@@ -79,6 +141,15 @@ public class Mealy {
         return minimize;
     }
 
+    /**
+     * Name: format <br>
+     * <br> Method used to prepare the format of the output table to be displayed. <br>
+     * <b>pre: </b> The input symbols list is already initialized and filled, also the output symbols matrix and the successors matrix. <br>
+	 * <b>post: </b> The partitioning algorithm is already done, the format of the output table is given to it. <br>
+     * @param groups - final groups obtained after doing the partitioning algorithm - groups = ArrayList of ArrayList of Integers, groups != null
+     * @param format - format of the table to be displayed represented by True for intermediate table and False for final table - format = boolean, format != null
+     * @return A String matrix representing the minimized Mealy machine in the specified format.
+    */
     private String[][] format(ArrayList<ArrayList<Integer>> groups, boolean format) {
         String[][] minimize = new String[groups.size() + 1][inputSymbols.length + 1];
         minimize[0][0] = format ? "Blocks" : "New Names";
@@ -89,6 +160,15 @@ public class Mealy {
         return minimize;
     }
 
+    /**
+     * Name: finalFormat <br>
+     * <br> Method used to put the Mealy table in the final format. <br>
+     * <b>pre: </b> The partitioning algorithm is already done, the input symbols list is already initialized and filled, also the output symbols matrix and the successors matrix. <br>
+	 * <b>post: </b> The Mealy table is put in the final format. <br>
+     * @param groups - final groups obtained after doing the partitioning algorithm - groups = ArrayList of ArrayList of Integers, groups != null
+     * @param minimize - Java String matrix representing a Mealy machine after partitioning - matrix = String[][], matrix != null
+     * @return A String matrix representing the Mealy machine in the final format.
+    */
     private String[][] finalFormat(ArrayList<ArrayList<Integer>> groups, String[][] minimize) {
         for (int i = 0, j = groups.size() - 1; i < groups.size(); i++, j--) {
             minimize[i + 1][0] = (char) ('Z' - j) + "";
@@ -109,6 +189,15 @@ public class Mealy {
         return minimize;
     }
 
+    /**
+     * Name: intermediateFormat <br>
+     * <br> Method used to put the Mealy table in the intermediate format. <br>
+     * <b>pre: </b> The partitioning algorithm is already done, the input symbols list is already initialized and filled, also the output symbols matrix and the successors matrix. <br>
+	 * <b>post: </b> The Mealy table is put in the intermediate format. <br>
+     * @param groups - final groups obtained after doing the partitioning algorithm - groups = ArrayList of ArrayList of Integers, groups != null
+     * @param minimize - Java String matrix representing a Mealy machine after partitioning - matrix = String[][], matrix != null
+     * @return A String matrix representing the Mealy machine in the intermediate format.
+    */
     private String[][] intermediateFormat(ArrayList<ArrayList<Integer>> groups, String[][] minimize) {
         for (int i = 0; i < groups.size(); i++) {
             ArrayList<Integer> group = groups.get(i);
@@ -142,6 +231,15 @@ public class Mealy {
         return minimize;
     }
 
+    /**
+     * Name: isTheSame <br>
+     * <br> Method used to determine if two matrices are equal. <br>
+     * <b>pre: </b> The matrices of integers used for the comparison are already initialized and filled. <br>
+	 * <b>post: </b> The true value of verifying if two matrices are equal is determined. <br>
+     * @param subGroups1 - first matrix of groups to be compared - subGroups1 = ArrayList of ArrayList of Integers, subGroups1 != null
+     * @param subGroups2 - second matrix of groups to be compared - subGroups2 = ArrayList of ArrayList of Integers, subGroups2 != null
+     * @return An boolean with true if the two matrices are equal, or with false if not.
+    */
     private boolean isTheSame(ArrayList<ArrayList<Integer>> subGroups1, ArrayList<ArrayList<Integer>> subGroups2) {
         boolean stop = subGroups1.size() == subGroups2.size() ? false : true;
         for (int i = 0; i < subGroups1.size() && !stop; i++) {
@@ -153,6 +251,13 @@ public class Mealy {
         return !stop;
     }
 
+    /**
+     * Name: step2A <br>
+     * <br> Method used to get the groups of the first partition (step 2a of the partitioning algorithm). <br>
+     * <b>pre: </b> The output symbols matrix is already initialized and filled. <br>
+	 * <b>post: </b> The groups of the first partition are obtained. <br>
+     * @return An ArrayList of ArrayList of Integers representing the groups of the first partition of a Mealy machine.
+    */
     private ArrayList<ArrayList<Integer>> step2A() {
         ArrayList<ArrayList<Integer>> groups = new ArrayList<>();
         for (int i = 0; i < outputSymbols.length; i++) {
@@ -186,6 +291,14 @@ public class Mealy {
         return groups;
     }
 
+    /**
+     * Name: step2B <br>
+     * <br> Method used to get the groups of the following partitions (step 2b of the partitioning algorithm). <br>
+     * <b>pre: </b> The successors matrix is already initialized and filled. <br>
+	 * <b>post: </b> The groups of the following partitions are obtained. <br>
+     * @param groups - groups of the first partition - groups = ArrayList of ArrayList of Integers, groups != null
+     * @return An ArrayList of ArrayList of Integers representing the groups of the following partitions of a Mealy machine.
+    */
     private ArrayList<ArrayList<Integer>> step2B(ArrayList<ArrayList<Integer>> groups) {
         ArrayList<ArrayList<Integer>> subGroups = new ArrayList<>();
         for (int g = 0; g < groups.size(); g++) {
@@ -224,6 +337,15 @@ public class Mealy {
         return subGroups;
     }
 
+    /**
+     * Name: indexOfGroup <br>
+     * <br> Method used to get the index of a group in a matrix of groups given. <br>
+     * <b>pre: </b> The matrix of groups is already initialized and filled. <br>
+	 * <b>post: </b> The index of a group in the matrix of groups is obtained. <br>
+     * @param groups - matrix group to be compared - groups = ArrayList of ArrayList of Integers, groups != null
+     * @param num - integer representing a group in the matrix of groups - num = int, num != null
+     * @return An integer representing the index of the specified group in the matrix of groups.
+    */
     private int indexOfGroup(ArrayList<ArrayList<Integer>> groups, int num) {
         int index = -1;
         boolean exists = false;
@@ -239,6 +361,13 @@ public class Mealy {
         return index;
     }
 
+    /**
+     * Name: fillMealy <br>
+     * <br> Method used to fill the input and output symbols matrix, and the successors matrix of a Mealy machine. <br>
+     * <b>pre: </b> The Java String matrix representing the Mealy machine is already initialized and filled. <br>
+	 * <b>post: </b> The input and output symbols matrix, and the successors matrix of the Mealy machine are filled. <br>
+     * @param machine - Java String matrix representing a Mealy machine - matrix = String[][], matrix != null
+    */
     private void fillMealy(String[][] machine) {
         inputSymbols(machine);
         states(machine);
@@ -257,6 +386,13 @@ public class Mealy {
         this.outputSymbols = outputSymbols;
     }
 
+    /**
+     * Name: inputSymbols <br>
+     * <br> Method used to fill the input list of a Mealy machine. <br>
+     * <b>pre: </b> The Java String matrix representing the Mealy machine is already initialized and filled. <br>
+	 * <b>post: </b> The input symbols list of the Mealy machine is filled. <br>
+     * @param machine - Java String matrix representing a Mealy machine - matrix = String[][], matrix != null
+    */
     private void inputSymbols(String[][] machine) {
         int length = machine[0].length;
         String[] inputSymbols = new String[length - 1];
@@ -266,6 +402,13 @@ public class Mealy {
         this.inputSymbols = inputSymbols;
     }
 
+    /**
+     * Name: states <br>
+     * <br> Method used to fill the states list of a Mealy machine. <br>
+     * <b>pre: </b> The Java String matrix representing the Mealy machine is already initialized and filled. <br>
+	 * <b>post: </b> The states list of the Mealy machine is filled. <br>
+     * @param machine - Java String matrix representing a Mealy machine - matrix = String[][], matrix != null
+    */
     private void states(String[][] machine) {
         int length = machine.length;
         String[] states = new String[length - 1];
