@@ -6,6 +6,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -109,44 +111,55 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <HBox fx:id="tableSpace" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-alignment: center;">
-         <children>
-            <GridPane fx:id="matrixInput" alignment="CENTER" gridLinesVisible="true" visible="false">
-               <columnConstraints>
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="SOMETIMES" />
-               </rowConstraints>
-            </GridPane>
-            <Label fx:id="arrow1">
-               <font>
-                  <Font name="Consolas" size="24.0" />
-               </font>
-            </Label>
-            <GridPane fx:id="matrixIntermediate" alignment="CENTER" gridLinesVisible="true" layoutX="10.0" layoutY="10.0" visible="false">
-               <columnConstraints>
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="SOMETIMES" />
-               </rowConstraints>
-            </GridPane>
-            <Label fx:id="arrow2">
-               <font>
-                  <Font name="Consolas" size="24.0" />
-               </font>
-            </Label>
-            <GridPane fx:id="matrixOutput" alignment="CENTER" gridLinesVisible="true" visible="false">
-               <columnConstraints>
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="SOMETIMES" />
-               </rowConstraints>
-            </GridPane>
-         </children>
-      </HBox>
+      <ScrollPane maxHeight="250.0" maxWidth="1000.0" stylesheets="@scroll-bar.css">
+        <content>
+          <AnchorPane>
+               <children>
+                  <HBox fx:id="tableSpace" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+                     <children>
+                        <GridPane fx:id="matrixInput" alignment="CENTER" gridLinesVisible="true" visible="false">
+                           <columnConstraints>
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
+                        <Label fx:id="arrow1">
+                           <font>
+                              <Font name="Consolas" size="24.0" />
+                           </font>
+                        </Label>
+                        <GridPane fx:id="matrixIntermediate" alignment="CENTER" gridLinesVisible="true" layoutX="10.0" layoutY="10.0" visible="false">
+                           <columnConstraints>
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
+                        <Label fx:id="arrow2">
+                           <font>
+                              <Font name="Consolas" size="24.0" />
+                           </font>
+                        </Label>
+                        <GridPane fx:id="matrixOutput" alignment="CENTER" gridLinesVisible="true" visible="false">
+                           <columnConstraints>
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" valignment="CENTER" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
       <JFXButton fx:id="buttonMinimize" onAction="#minimize" style="-fx-background-color: #000000;" text="Minimize Table" textFill="WHITE" visible="false">
          <font>
             <Font name="Consolas Bold" size="24.0" />

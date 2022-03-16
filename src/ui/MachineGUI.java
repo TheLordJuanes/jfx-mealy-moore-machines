@@ -186,48 +186,50 @@ public class MachineGUI {
     */
 	@FXML
 	public void generateTable(ActionEvent event) {
-		if ((mealy.isSelected() || moore.isSelected()) && !states.getText().equals("")) {
-			int rows = Integer.parseInt(states.getText());
-			String[] alph = alphabet.getText().split(",");
-			int columns = alph.length;
-
-			// Clear tables on screen if they already exist.
-			matrixInput = new GridPane();
-			matrixIntermediate = new GridPane();
-			matrixOutput = new GridPane();
-
-			matrixInput.setAlignment(Pos.CENTER);
-
-			for (int i = 0; i < columns; i++) {
-				Label temp = new Label(alph[i]);
-				placeInMatrix(temp, matrixInput, 0, i + 1);
-			}
-			if (moore.isSelected()) {
-				columns++;
-				Label temp = new Label("S");
-				placeInMatrix(temp, matrixInput, 0, columns);
-			}
-			for (int i = 0; i < rows; i++) {
-				Label temp = new Label((char) ('A' + i) + "");
-				placeInMatrix(temp, matrixInput, i + 1, 0);
-			}
-			inputs = new JFXTextField[rows][columns];
-			for (int i = 1; i <= rows; i++) {
-				for (int j = 1; j <= columns; j++) {
-					JFXTextField temp = new JFXTextField("");
-					temp.setMaxWidth(120);
-					placeInMatrix(temp, matrixInput, i, j);
-					inputs[i - 1][j - 1] = temp;
+		if(states.getText()!=null && !states.getText().equals("") && Integer.parseInt(states.getText())>0 && !alphabet.getText().equals("") && !alphabet.getText().equals(",")){
+			if ((mealy.isSelected() || moore.isSelected())) {
+				int rows = Integer.parseInt(states.getText());
+				String[] alph = alphabet.getText().split(",");
+				int columns = alph.length;
+	
+				// Clear tables on screen if they already exist.
+				matrixInput = new GridPane();
+				matrixIntermediate = new GridPane();
+				matrixOutput = new GridPane();
+	
+				matrixInput.setAlignment(Pos.CENTER);
+	
+				for (int i = 0; i < columns; i++) {
+					Label temp = new Label(alph[i]);
+					placeInMatrix(temp, matrixInput, 0, i + 1);
 				}
+				if (moore.isSelected()) {
+					columns++;
+					Label temp = new Label("S");
+					placeInMatrix(temp, matrixInput, 0, columns);
+				}
+				for (int i = 0; i < rows; i++) {
+					Label temp = new Label((char) ('A' + i) + "");
+					placeInMatrix(temp, matrixInput, i + 1, 0);
+				}
+				inputs = new JFXTextField[rows][columns];
+				for (int i = 1; i <= rows; i++) {
+					for (int j = 1; j <= columns; j++) {
+						JFXTextField temp = new JFXTextField("");
+						temp.setMaxWidth(120);
+						placeInMatrix(temp, matrixInput, i, j);
+						inputs[i - 1][j - 1] = temp;
+					}
+				}
+				tableSpace.getChildren().set(0, matrixInput);
+				tableSpace.getChildren().set(2, matrixIntermediate);
+				tableSpace.getChildren().set(4, matrixOutput);
+	
+				arrow1.setText("");
+				arrow2.setText("");
+	
+				buttonMinimize.setVisible(true);
 			}
-			tableSpace.getChildren().set(0, matrixInput);
-			tableSpace.getChildren().set(2, matrixIntermediate);
-			tableSpace.getChildren().set(4, matrixOutput);
-
-			arrow1.setText("");
-			arrow2.setText("");
-
-			buttonMinimize.setVisible(true);
 		}
 	}
 
